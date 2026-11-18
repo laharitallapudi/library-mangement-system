@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Overview{% endblock %}{% block content %}
+<div class="page-heading"><div><div class="eyebrow">YOUR LIBRARY AT A GLANCE</div><h1>Good morning, librarian <span>☀</span></h1><p>Here’s what’s happening around the shelves today.</p></div><a class="button primary" href="{{ url_for('checkout') }}">＋ &nbsp;New checkout</a></div>
+<div class="stats-grid">
+  <article class="stat-card"><div class="stat-icon lilac">▤</div><div class="stat-caption">Books in collection</div><div class="stat-number">{{ stats.books }}</div><div class="stat-foot">{{ stats.available }} ready to borrow</div></article>
+  <article class="stat-card"><div class="stat-icon peach">♙</div><div class="stat-caption">Registered members</div><div class="stat-number">{{ stats.members }}</div><div class="stat-foot">Readers in our community</div></article>
+  <article class="stat-card"><div class="stat-icon blue">↔</div><div class="stat-caption">Active checkouts</div><div class="stat-number">{{ stats.active_loans }}</div><div class="stat-foot">Books out with readers</div></article>
+  <article class="stat-card"><div class="stat-icon rose">◷</div><div class="stat-caption">Past due</div><div class="stat-number">{{ stats.overdue }}</div><div class="stat-foot">A friendly reminder may help</div></article>
+</div>
+<section class="panel"><div class="panel-heading"><div><h2>Needs a little attention</h2><p>Books that are past their due date</p></div><a class="text-link" href="{{ url_for('loans') }}">All loans →</a></div>
+{% if overdue_loans %}<div class="table-wrap"><table><thead><tr><th>BOOK</th><th>MEMBER</th><th>DUE DATE</th><th>STATUS</th></tr></thead><tbody>{% for loan in overdue_loans %}<tr><td><strong>{{ loan.book_title }}</strong></td><td>{{ loan.member_name }}</td><td>{{ loan.due_date }}</td><td><span class="badge overdue">Overdue</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><span class="empty-icon">☀</span><strong>All caught up!</strong><p>No overdue books at the moment.</p></div>{% endif %}</section>
+<div class="quick-links"><a class="quick-card" href="{{ url_for('add_book') }}"><span class="quick-icon">＋</span><span><strong>Add a book</strong><small>Grow your collection</small></span><b>→</b></a><a class="quick-card" href="{{ url_for('add_member') }}"><span class="quick-icon">♙</span><span><strong>Register a reader</strong><small>Welcome a new member</small></span><b>→</b></a></div>
+{% endblock %}
