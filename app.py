@@ -1,10 +1,11 @@
 from datetime import date
+import os
 import sqlite3
 from flask import Flask, flash, redirect, render_template, request, url_for
 from database import get_connection, initialize_database
 
 app = Flask(__name__)
-app.secret_key = "library-demo-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY", "library-demo-secret-key")
 initialize_database()
 
 @app.context_processor
@@ -185,4 +186,6 @@ def return_book(loan_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
 
